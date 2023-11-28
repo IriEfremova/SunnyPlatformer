@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class CollectibleHealth : MonoBehaviour
 {
+    public GameObject CollectEffect;
     public string textName;
 
     private TMP_Text textCount;
@@ -38,6 +39,7 @@ public class CollectibleHealth : MonoBehaviour
                 Debug.LogError("CollectibleHealth.sc: no find UI element for display count");
 
             GetComponent<SpriteRenderer>().enabled = false;
+            Instantiate(CollectEffect, transform.position, Quaternion.identity);
             Destroy(gameObject, 1);
         }
     }
