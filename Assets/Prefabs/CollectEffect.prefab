@@ -119,4 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c85452239bdda947930efa87a7a3ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeUntilDestroy: 1
+  ByAnimationTime: 1
+  TimeUntilDestroy: 0

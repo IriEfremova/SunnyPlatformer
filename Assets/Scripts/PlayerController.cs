@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGround)
         {
             upForce = JumpForce;
-            animator.SetTrigger("Jump");
+            animator.SetBool("Jump", true);
         }
     }
 
@@ -87,6 +87,9 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+            animator.SetBool("Jump", false);
         }
     }
+
+
 }

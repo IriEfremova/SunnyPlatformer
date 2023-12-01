@@ -26,16 +26,12 @@ public class InteractPlayerEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Vector2 p = collision.gameObject.transform.position;
-            Vector2 e = transform.position;
-            Vector2 d = p - e;
-
-            Vector2 s = Vector2.right * gameObject.GetComponent<CyclicalMovement>().Speed;
-
-            float angle = Vector2.Angle(d.normalized, s.normalized);
-            //float angle = collision.gameObject.GetComponent<PlayerController>().GetAngle();
-            Debug.Log("Vector dir = " + d + " Vector impulse = " + collision.GetContact(0).tangentImpulse);
-            Debug.Log("Angle = " + angle);
+            Vector2 characterDir = collision.gameObject.transform.position - transform.position;
+            Vector2 enemyDir = collision.GetContact(0).rigidbody.velocity;
+            float angle = Vector2.Angle(characterDir.normalized, enemyDir.normalized);
+            
+            //float characterVelocity = collision.GetContact(0).otherRigidbody.velocity.magnitude;
+            //Debug.Log("rel = " + collision.relativeVelocity + " " + collision.GetContact(0).normalImpulse + " " + collision.GetContact(0).tangentImpulse);
             if (angle < 40)
                 Destroy(collision.gameObject);
             else
