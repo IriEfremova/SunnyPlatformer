@@ -44,10 +44,19 @@ public class PlayerHealth : Health
         UpdateHealth();
         if (lifesCount <= 0)
         {
-            gameObject.transform.position = RespawnPosition.position;
+            StartCoroutine(RespawnCoroutine());            
             UpdateLife();
         }
         else
             LifeImages[lifesCount].GetComponent<Image>().enabled = false;
+    }
+
+    IEnumerator RespawnCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            gameObject.transform.position = RespawnPosition.position;
+        }
     }
 }
