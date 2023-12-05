@@ -7,11 +7,15 @@ using UnityEngine.UIElements;
 public class PlayerController : MonoBehaviour
 {
     public float Speed = 5, JumpForce = 400;
-    
+    public Vector2 CrouchColliderSize = new Vector2(0.96f, 0.86f);
+    public Vector2 CrouchColliderOffset = new Vector2(0.06f, -0.56f);
+
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider;
 
+    private Vector2 defColliderSize, defColliderOffset;
     private Vector2 move;
     private float upForce;
     private bool isGround = true;
@@ -23,6 +27,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
+        defColliderSize = boxCollider.size;
+        defColliderOffset = boxCollider.offset;
     }
 
     // Update is called once per frame
@@ -38,11 +45,15 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.C) && isGround)
         {
             animator.SetBool("Crouch", true);
+            boxCollider.size = CrouchColliderSize;
+            boxCollider.offset = CrouchColliderOffset;
             isCrouch = true;
         }
         else
         {
             animator.SetBool("Crouch", false);
+            boxCollider.size = defColliderSize;
+            boxCollider.offset = defColliderOffset;
             isCrouch = false;
         }
     }
@@ -72,6 +83,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isCrouch)
+        {
+            upForce = 0;
+            return;
+        }
+            
         if (upForce > 0)
         {
             rb.AddForce(Vector2.up * upForce);

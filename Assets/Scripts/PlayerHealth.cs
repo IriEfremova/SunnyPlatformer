@@ -11,7 +11,7 @@ public class PlayerHealth : Health
 
     private int lifesCount;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         UpdateLife();
@@ -44,18 +44,18 @@ public class PlayerHealth : Health
         UpdateHealth();
         if (lifesCount <= 0)
         {
-            StartCoroutine(RespawnCoroutine());            
+            StartCoroutine(RespawnCoroutine(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length));            
             UpdateLife();
         }
         else
             LifeImages[lifesCount].GetComponent<Image>().enabled = false;
     }
 
-    IEnumerator RespawnCoroutine()
+    IEnumerator RespawnCoroutine(float timer)
     {
         while (true)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(timer);
             gameObject.transform.position = RespawnPosition.position;
         }
     }
