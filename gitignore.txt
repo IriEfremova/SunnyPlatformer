@@ -1,11 +1,11 @@
 Library/
 Temp/
-Obj/
+obj/
 Build/
 .vs/
 .idea/
 .vscode/
-packages/
+Packages/
 _NCrunch_GitHub.Unity
 *.user
 .DS_Store
